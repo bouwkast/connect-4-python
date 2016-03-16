@@ -1,7 +1,11 @@
-class game:
-    num_rows = 6
-    num_cols = 7
-    num_win = 4
+import sys
+from board import Board
+
+
+class Game:
+    num_rows = 3
+    num_cols = 3
+    num_win = 3
     board = None
     player = 1
 
@@ -11,7 +15,7 @@ class game:
             quit()
         else:
             self.num_rows = num_rows
-        if num_cols < 2 or enumerate > 100:
+        if num_cols < 2 or num_cols > 100:
             print("Error! The number of columns must be between 2 and 100. \n")
             quit()
         else:
@@ -22,25 +26,137 @@ class game:
         else:
             self.num_win = num_win
 
-    def create_board(self):
-        self.board = []
-        for row in range(self.num_rows):
-            self.board.append([])
-            for col in range(self.num_cols):
-                self.board[row].append(-1)
+        self.board = Board(self.num_rows, self.num_cols)
 
-    def place_token(self, col):
-        if col < 0 or col >= self.num_cols:
-            print("Error! You must place a token on the board.")
-        else:
-            for row in xrange(self.num_rows - 1, 0, -1):
-                if self.board[row][col] == -1:
-                    self.board[row][col] = self.player
-                    return 1
-                if row == 0:
-                    print("That column is full")
+    def __init__(self):
+        self.board = Board(self.num_rows, self.num_cols)
+
+    def put_token(self, col, player):
+        try:
+            column = int(col)
+            return self.board.place_token(column, player)
+        except ValueError:
+            print("Error! Couldn't determine column entered, please make sure to use an integer within the bounds.")
+            return -1
+
+    def print_board(self):
+        for row in xrange(0, self.num_rows):
+            for col in xrange(0, self.num_cols):
+                sys.stdout.write(str(self.board.cell_at(row, col)))
+                sys.stdout.write("\t")
+            print
+        print
+
+    def horizontal_check(self):
+        for row in xrange(0, self.num_rows - 1):
+            num_tokens = 1
+            for col in xrange(0, self.num_cols - 1):
+                player = self.board.cell_at(row, col)
+                if player != -1:
+                    if self.board.cell_at(row, col + 1) == player:
+                        ++num_tokens
+                    else:
+                        num_tokens = 1
+                else:
+                    num_tokens = 1
+                if num_tokens == self.num_win:
+                    winner = int(self.board.cell_at(row, col))
+                    return winner
+        return -1  # no winner
+
+    def vertical_check(self):
+        for col in xrange(0, self.num_cols - 1):
+            num_tokens = 1
+            for row in xrange(0, self.num_rows - 1):
+                player = self.board.cell_at(row, col)
+                if player != -1:
+                    if self.board.cell_at(row + 1, col) == player:
+                        num_tokens += 1
+                    else:
+                        num_tokens = 1
+                else:
+                    num_tokens = 1
+
+                if num_tokens == self.num_win:
+                    winner = int(self.board.cell_at(row, col))
+                    return winner
+        return -1  # no winner
+
+    def down_right_check(self):
+        for row in xrange(0, self.num_rows - 2):
+            for col in xrange(0, self.num_cols - 2):
+                num_tokens = 1
+                y = col
+                for x in xrange(row, self.num_rows - 2):
+                    player = self.board.cell_at(x, y)
+                    if player != -1:
+                        if self.board.cell_at(x + 1, y + 1) == player:
+                            num_tokens += 1
+                        else:
+                            num_tokens = 1
+                    else:
+                        num_tokens = 1
+                    if num_tokens == self.num_win:
+                        winner = int(self.board.cell_at(x, y))
+                        return winner
+                    y += 1
+                    if y > self.num_cols - 2:
+                        break
+        return -1
+
+    def down_left_check(self):
+        for row in xrange(0, self.num_rows - 2):
+            for col in xrange(0, self.num_cols - 2):
+                num_tokens = 1
+                y = col + 1
+                for x in xrange(row, self.num_rows - 2):
+                    player = self.board.cell_at(x, y)
+                    if player != -1:
+                        if self.board.cell_at(x + 1, y - 1) == player:
+                            num_tokens += 1
+                        else:
+                            num_tokens = 1
+                    else:
+                        num_tokens = 1
+                    if num_tokens == self.num_win:
+                        winner = int(self.board.cell_at(x, y))
+                        return winner
+                    y -= 1
+                    if y < 1:
+                        break
+        return -1
+
+    def check_winner(self):
+        winner = self.horizontal_check()
+        if winner != -1:
+            return winner
+        winner = self.vertical_check()
+        if winner != -1:
+            return winner
+        winner = self.down_left_check()
+        if winner != -1:
+            return winner
+        winner = self.down_right_check()
+        if winner != -1:
+            return winner
+        return -1
+
+    def is_board_full(self):
+        for row in xrange(0, self.num_rows):
+            for col in xrange(0, self.num_cols):
+                if self.board.cell_at(row, col) == -1:
                     return 0
-        return 0 # Was not able to place the token
+        return 1
 
-
-
+#
+# connect = Game(3, 3, 2)
+# connect.print_board()
+# connect.put_token(0, 1)
+# connect.print_board()
+# connect.put_token(1, 0)
+# connect.print_board()
+# connect.put_token(0, 1)
+# connect.print_board()
+# connect.put_token(0, 1)
+# connect.print_board()
+# print(connect.check_winner())

@@ -1,1 +1,2 @@
-from board import board
+from board import Board
+from game import Game
