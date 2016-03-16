@@ -48,13 +48,13 @@ class Game:
         print
 
     def horizontal_check(self):
-        for row in xrange(0, self.num_rows - 1):
+        for row in xrange(0, self.num_rows):
             num_tokens = 1
-            for col in xrange(0, self.num_cols - 1):
+            for col in xrange(0, self.num_cols):
                 player = self.board.cell_at(row, col)
-                if player != -1:
+                if player != -1 and col < self.num_cols - 1:
                     if self.board.cell_at(row, col + 1) == player:
-                        ++num_tokens
+                        num_tokens += 1
                     else:
                         num_tokens = 1
                 else:
