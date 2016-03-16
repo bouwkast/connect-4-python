@@ -83,13 +83,13 @@ class Game:
         return -1  # no winner
 
     def down_right_check(self):
-        for row in xrange(0, self.num_rows - 2):
-            for col in xrange(0, self.num_cols - 2):
+        for row in xrange(0, self.num_rows - 1):
+            for col in xrange(0, self.num_cols - 1):
                 num_tokens = 1
                 y = col
-                for x in xrange(row, self.num_rows - 2):
+                for x in xrange(row, self.num_rows - 1):
                     player = self.board.cell_at(x, y)
-                    if player != -1:
+                    if player != -1 and x < self.num_rows - 1 and y < self.num_cols - 1:
                         if self.board.cell_at(x + 1, y + 1) == player:
                             num_tokens += 1
                         else:
@@ -105,13 +105,15 @@ class Game:
         return -1
 
     def down_left_check(self):
-        for row in xrange(0, self.num_rows - 2):
-            for col in xrange(0, self.num_cols - 2):
+        for row in xrange(0, self.num_rows - 1):
+            for col in xrange(0, self.num_cols - 1):
                 num_tokens = 1
                 y = col + 1
-                for x in xrange(row, self.num_rows - 2):
+                for x in xrange(row, self.num_rows - 1):
+                    if y < 0:
+                        break
                     player = self.board.cell_at(x, y)
-                    if player != -1:
+                    if player != -1 and y > 0:
                         if self.board.cell_at(x + 1, y - 1) == player:
                             num_tokens += 1
                         else:
@@ -122,8 +124,7 @@ class Game:
                         winner = int(self.board.cell_at(x, y))
                         return winner
                     y -= 1
-                    if y < 1:
-                        break
+
         return -1
 
     def check_winner(self):

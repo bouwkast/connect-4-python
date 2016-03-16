@@ -5,8 +5,6 @@ import sys
 def main():
     connect = Game()
 
-    print(connect.check_winner())
-
     if len(sys.argv) == 4:
         connect = Game(sys.argv[1], sys.argv[2], sys.argv[3])
 
@@ -32,7 +30,6 @@ def main():
             print("Sorry, can't place a token in column " + column)
             connect.print_board()
         is_winner = connect.check_winner()
-        print(is_winner)
         if is_winner != -1:
             print("Here")
             print("Congratulations! Player " + str(is_winner) + " has won!")

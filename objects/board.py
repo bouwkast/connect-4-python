@@ -24,10 +24,12 @@ class Board:
 
     def cell_at(self, row, col):
         if row < 0 or row >= self.num_rows:
-            print("Error! Can't return that cell because the row " + row + " is out of bounds")
+            print("Error! Can't return that cell because the row " + str(row) + " is out of bounds")
+            print("rRow: " + str(row) + " Column: " + str(col))
             quit()
         if col < 0 or col >= self.num_cols:
-            print("Error! Can't return that cell because the column " + col + " is out of bounds")
+            print("Error! Can't return that cell because the column " + str(col) + " is out of bounds")
+            print("cRow: " + str(row) + " Column: " + str(col))
             quit()
         return self.grid[row][col]
 
