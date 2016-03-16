@@ -1,6 +1,6 @@
 from objects.game import Game
 import sys
-
+import pickle
 
 def main():
     connect = Game()
@@ -12,22 +12,27 @@ def main():
     winner = False
     connect.print_board()
     while not winner:
-        column = None
+        user_input = None
         result = 0
-        while column is None:
+        while user_input is None:
             try:
-                column = raw_input("Please enter a column to place a token: ")
-                result = connect.put_token(int(column), player)
+                user_input = raw_input("Please enter a column to place a token: ")
+                if user_input.lower() == "save":
+                    connect.save_game()
+                elif user_input.lower() == "load":
+                    connect = connect.load_game()
+                result = connect.put_token(int(user_input), player)
             except ValueError:
                 print("Error! Please enter an integer to place a token")
 
         if result == 1:
-            print("Token successfully placed in column " + column)
+            print("Token successfully placed in column " + user_input)
             player += 1
             player %= 2
+            connect.player = player
             connect.print_board()
         else:
-            print("Sorry, can't place a token in column " + column)
+            print("Sorry, can't place a token in column " + user_input)
             connect.print_board()
         is_winner = connect.check_winner()
         if is_winner != -1:

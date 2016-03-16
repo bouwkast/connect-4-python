@@ -1,3 +1,4 @@
+import pickle
 import sys
 from board import Board
 
@@ -7,7 +8,7 @@ class Game:
     num_cols = 3
     num_win = 3
     board = None
-    player = 1
+    player = -1
 
     def __init__(self, num_rows, num_cols, num_win):
         if num_rows < 2 or num_rows > 100:
@@ -148,6 +149,27 @@ class Game:
                 if self.board.cell_at(row, col) == -1:
                     return 0
         return 1
+
+    def save_game(self):
+        file_name = "connect_4_python_user_save"
+        file_object = open(file_name, 'wb')
+        try:
+            pickle.dump(self, file_object)
+        except pickle.PicklingError:
+            print("Error saving the game - game was not saved")
+        except IOError as ioe:
+            print("IOError {0}".format(ioe.args))
+
+    def load_game(self):
+        file_name = "connect_4_python_user_save"
+
+        try:
+            file_object = open(file_name, 'r')
+            return pickle.load(file_object)
+        except IOError as ioe:
+            print("IOError {0}".format(ioe.args))
+        except pickle.UnpicklingError:
+            print("Couldn't load the game, something must be wrong with the save file")
 
 #
 # connect = Game(3, 3, 2)
