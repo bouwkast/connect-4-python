@@ -1,17 +1,20 @@
 from objects.game import Game
 import sys
-import pickle
+
 
 def main():
     connect = Game()
 
     if len(sys.argv) == 4:
-        connect = Game(sys.argv[1], sys.argv[2], sys.argv[3])
+        try:
+            connect = Game(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+        except ValueError:
+            print("ValueError - please enter integers as a parameters. Exiting.")
+            quit()
 
     player = 0
-    winner = False
     connect.print_board()
-    while not winner:
+    while True:
         user_input = None
         result = 0
         while user_input is None:
@@ -38,14 +41,13 @@ def main():
         if is_winner != -1:
             print("Here")
             print("Congratulations! Player " + str(is_winner) + " has won!")
-            winner = True
             connect.print_board()
             break;
         is_full = connect.is_board_full()
         if is_full != 0:
             print("Tie game, the board is full.")
             connect.print_board()
-            break;
+            break
 
 
 if __name__ == '__main__':

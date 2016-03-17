@@ -10,7 +10,7 @@ class Game:
     board = None
     player = -1
 
-    def __init__(self, num_rows, num_cols, num_win):
+    def __init__(self, num_rows=3, num_cols=3, num_win=3):
         if num_rows < 2 or num_rows > 100:
             print("Error! The number of rows must be between 2 and 100. \n")
             quit()
@@ -27,9 +27,6 @@ class Game:
         else:
             self.num_win = num_win
 
-        self.board = Board(self.num_rows, self.num_cols)
-
-    def __init__(self):
         self.board = Board(self.num_rows, self.num_cols)
 
     def put_token(self, col, player):
