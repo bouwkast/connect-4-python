@@ -13,7 +13,7 @@ def main():
             quit()
 
     count = -1
-    player = lambda p: (p + 1) % 2 # lambda function to change the player's turn
+    player = lambda p: (p + 1) % 2  # lambda function to change the player's turn
     connect.print_board()
     saved = False
     loaded = False
