@@ -152,6 +152,7 @@ class Game:
         file_object = open(file_name, 'wb')
         try:
             pickle.dump(self, file_object)
+            print("Saved the game")
         except pickle.PicklingError:
             print("Error saving the game - game was not saved")
         except IOError as ioe:
@@ -162,6 +163,7 @@ class Game:
 
         try:
             file_object = open(file_name, 'r')
+            print("Loaded the game")
             return pickle.load(file_object)
         except IOError as ioe:
             print("IOError {0}".format(ioe.args))
