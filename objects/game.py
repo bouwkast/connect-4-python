@@ -31,8 +31,8 @@ class Game:
 
     def put_token(self, col, player):
         try:
-            column = int(col)
-            return self.board.place_token(column, player)
+            column = int(col)  # while col should be an int, this is just for extra precautions
+            return self.board.place_token(column, player)  # returns a 1 if it was successfully placed
         except ValueError:
             print("Error! Couldn't determine column entered, please make sure to use an integer within the bounds.")
             return -1
@@ -170,15 +170,4 @@ class Game:
         except pickle.UnpicklingError:
             print("Couldn't load the game, something must be wrong with the save file")
 
-#
-# connect = Game(3, 3, 2)
-# connect.print_board()
-# connect.put_token(0, 1)
-# connect.print_board()
-# connect.put_token(1, 0)
-# connect.print_board()
-# connect.put_token(0, 1)
-# connect.print_board()
-# connect.put_token(0, 1)
-# connect.print_board()
-# print(connect.check_winner())
+

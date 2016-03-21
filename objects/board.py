@@ -25,11 +25,9 @@ class Board:
     def cell_at(self, row, col):
         if row < 0 or row >= self.num_rows:
             print("Error! Can't return that cell because the row " + str(row) + " is out of bounds")
-            print("rRow: " + str(row) + " Column: " + str(col))
             quit()
         if col < 0 or col >= self.num_cols:
             print("Error! Can't return that cell because the column " + str(col) + " is out of bounds")
-            print("cRow: " + str(row) + " Column: " + str(col))
             quit()
         return self.grid[row][col]
 
@@ -37,10 +35,11 @@ class Board:
         if col < 0 or col >= self.num_cols:
             print("Error! You must place a token on the board.")
         else:
+            #  When placing a token start at the bottom of the col and then go up
             for row in xrange(self.num_rows - 1, -1, -1):
                 if self.grid[row][col] == -1:
                     self.grid[row][col] = player
-                    return 1
+                    return 1  # successfully placed the token
                 if row == 0:
                     print("That column is full")
                     return 0

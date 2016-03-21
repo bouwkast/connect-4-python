@@ -20,31 +20,31 @@ def main():
     while True:
         user_input = None
         result = 0
-        while user_input is None:
+        while user_input is None:  # Want to make sure that we have some input to go off of
             try:
                 user_input = raw_input("Please enter a column to place a token: ")
                 if user_input.lower() == "save":
                     connect.save_game()
-                    saved = True
+                    saved = True  # if they save the game we don't want to try and place a token
                     loaded = False
                     break
                 elif user_input.lower() == "load":
                     connect = connect.load_game()
                     saved = False
-                    loaded = True
+                    loaded = True  # if they loaded the game we don't want to try and place a token, but need to print
                     break
-                result = connect.put_token(int(user_input), player(count))
+                result = connect.put_token(int(user_input), player(count))  # try to put the token on the board
             except ValueError:
                 print("Error! Please enter an integer to place a token")
-            except KeyboardInterrupt:
-                print("\nKeyboardInterrupt - exiting the game")
+            except KeyboardInterrupt:  # occurs if something like ^C happens
+                print("\nExiting the game")
                 quit()
 
-        if result == 1:
+        if result == 1:  # if the token was successfully placed on the board
             print("Token successfully placed in column " + user_input)
-            count += 1
-            player(count)
-            connect.player = player(count)
+            count += 1  # increment the count that is used to determine the player
+            player(count)  # change the player
+            connect.player = player(count)  # update the player change in the game
             connect.print_board()
             saved = False
             loaded = False
@@ -52,7 +52,7 @@ def main():
             if not loaded:
                 print("Sorry, can't place a token in column " + user_input)
             connect.print_board()
-        is_winner = connect.check_winner()
+        is_winner = connect.check_winner()  # want to see if one of the players have won
         if is_winner != -1:
             print("Congratulations! Player " + str(is_winner) + " has won!")
             connect.print_board()
