@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from objects.game import Game
 import sys
 
