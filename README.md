@@ -2,9 +2,13 @@
 An implementation of the game Connect 4 in python
 
 To play the game simply run it from the command line with either of commands:
+"./connect4.py"
 
-./connect4.py
-python connect4.py
+or
+
+"python connect4.py"
+
+--without quotes
 
 The game takes 3 additional parameters in the command line, all are integers separated by whitespace.
 
