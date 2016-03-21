@@ -12,7 +12,6 @@ def main():
             print("ValueError - please enter integers as a parameters. Exiting.")
             quit()
 
-    count = -1
     player = lambda p: (p + 1) % 2  # lambda function to change the player's turn
     connect.print_board()
     saved = False
@@ -33,7 +32,7 @@ def main():
                     saved = False
                     loaded = True  # if they loaded the game we don't want to try and place a token, but need to print
                     break
-                result = connect.put_token(int(user_input), player(count))  # try to put the token on the board
+                result = connect.put_token(int(user_input), connect.player)  # try to put the token on the board
             except ValueError:
                 print("Error! Please enter an integer to place a token")
             except KeyboardInterrupt:  # occurs if something like ^C happens
@@ -42,9 +41,7 @@ def main():
 
         if result == 1:  # if the token was successfully placed on the board
             print("Token successfully placed in column " + user_input)
-            count += 1  # increment the count that is used to determine the player
-            player(count)  # change the player
-            connect.player = player(count)  # update the player change in the game
+            connect.player = player(connect.player)  # update the player change in the game
             connect.print_board()
             saved = False
             loaded = False

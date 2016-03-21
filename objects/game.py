@@ -8,7 +8,7 @@ class Game:
     num_cols = 3
     num_win = 3
     board = None
-    player = -1
+    player = 0
 
     def __init__(self, num_rows=3, num_cols=3, num_win=3):
         if num_rows < 2 or num_rows > 100:
@@ -22,7 +22,8 @@ class Game:
         else:
             self.num_cols = num_cols
         if num_win > num_cols or num_win > num_rows:
-            print("Error! The number in a row to win must be less than both the number of rows and columns. \n")
+            print("Error! The number in a row to win must be less than"
+                  " or equal to BOTH the number of rows and columns. \n")
             quit()
         else:
             self.num_win = num_win
@@ -167,7 +168,9 @@ class Game:
             return pickle.load(file_object)
         except IOError as ioe:
             print("IOError {0}".format(ioe.args))
+            print("Sorry - failed to load game, returning to current game")
+            return self
         except pickle.UnpicklingError:
             print("Couldn't load the game, something must be wrong with the save file")
-
-
+            print("Sorry - failed to load game, returning to current game")
+            return self
