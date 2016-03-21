@@ -25,6 +25,9 @@ class Game:
             print("Error! The number in a row to win must be less than"
                   " or equal to BOTH the number of rows and columns. \n")
             quit()
+        elif num_win < 2:
+            print("Error! The number in a row to win must be greater than 1.\n")
+            quit()
         else:
             self.num_win = num_win
 

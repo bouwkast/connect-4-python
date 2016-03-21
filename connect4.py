@@ -13,6 +13,12 @@ def main():
             quit()
 
     player = lambda p: (p + 1) % 2  # lambda function to change the player's turn
+    print("Creating a board of size " + str(connect.num_rows) + "x" + str(connect.num_cols) + " with " + str(
+        connect.num_win) + " in a row to win.")
+    print(
+        "To save the game, simply type save. Only one save is permitted and there is no option to determine its name.")
+    print("To load the game, simply type load.\n\n")
+
     connect.print_board()
     saved = False
     loaded = False
